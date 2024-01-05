@@ -1,5 +1,0 @@
-/* /index.html 200
-
-/admin/*
-  Access-Control-Allow-Origin: https://starlit-cuchufli-7fe773.netlify.app
-  Access-Control-Allow-Methods: GET, POST, PUT, DELETE
