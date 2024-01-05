@@ -3,32 +3,44 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
+const PORT = process.env.PORT || 3001
 
 const app = express();
 
 // Enable CORS for all routes
 app.use(cors());
+
+const prodOrigins = [process.env.ORIGIN_1, process.env.ORIGIN_2]
+const devOrigin = ['http://localhost:5173', ]
+const allowedOrigins = process.env.NODE_ENV === 'production' ? prodOrigins: devOrigin
+app.use( cors({
+    origin: (origin, callback) => {
+        if(allowedOrigins.includes(origin)){
+            console.log(origin, allowedOrigins)
+            callback(null, true);
+        } else{
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET','POST','PUT','DELETE']
+}));
+
+
+
+
+
+
+
+
+
+
 app.use(express.json());
 
 // Your routes and middleware go here...
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 
-// Handle preflight requests for '/admin/me'
-// app.options('/admin/me', (req, res) => {
-//   res.header('Access-Control-Allow-Origin', '');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   res.send();
-// });
-
-
-// const corsOptions ={
-//     origin:'https://starlit-cuchufli-7fe773.netlify.app', 
-//     credentials:true,            //access-control-allow-credentials:true
-//     optionSuccessStatus:200
-// }
-// app.use(cors(corsOptions));
 
 
 
@@ -37,3 +49,7 @@ mongoose.connect('mongodb+srv://pranavbedi6:HePaj9j1QpC0OTcw@cluster0.k0ungut.mo
 
 // Start the server on port 3001
 app.listen(3001, () => console.log('Server running on port 3001'));
+
+
+
+

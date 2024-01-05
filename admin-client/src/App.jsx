@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import path from 'path';
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
 
-if(process.env.Node_ENV === 'production') disableReactDevTools
+// if(process.env.Node_ENV === 'production') disableReactDevTools();
 
 function App() {
     return (
