@@ -21,6 +21,7 @@ router.get("/me", authenticateJwt, async (req, res) => {
 
 router.post('/signup', (req, res) => {
     const { username, password } = req.body;
+    console.log('Login request received:', req.body);
     function callback(admin) {
       if (admin) {
         res.status(403).json({ message: 'Admin already exists' });
@@ -38,7 +39,7 @@ router.post('/signup', (req, res) => {
   });
   
   router.post('/login', async (req, res) => {
-    const { username, password } = req.headers;
+    const { username, password } = req.body;
     const admin = await Admin.findOne({ username, password });
     if (admin) {
       const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
