@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/admin/signup"
-  to = "https://coursera-jloo.onrender.com/admin/signup"
-  status = 200
-  headers = {Access-Control-Allow-Origin = "https://6597e2800e77eb09a9af25e1--starlit-cuchufli-7fe773.netlify.app"}
