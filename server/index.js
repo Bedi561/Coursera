@@ -23,12 +23,12 @@ app.use("/user", userRouter);
 // });
 
 
-const corsOptions ={
-    origin:'https://starlit-cuchufli-7fe773.netlify.app', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+// const corsOptions ={
+//     origin:'https://starlit-cuchufli-7fe773.netlify.app', 
+//     credentials:true,            //access-control-allow-credentials:true
+//     optionSuccessStatus:200
+// }
+// app.use(cors(corsOptions));
 
 
 
