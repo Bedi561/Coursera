@@ -12,17 +12,7 @@ app.use(cors());
 // Enable CORS for all routes
 app.use(
     cors({
-      origin: (origin, callback) => {
-        const devOrigin = ['http://localhost:5173'];
-        const allowedOrigins = process.env.NODE_ENV === 'production' ? [] : devOrigin;
-  
-        if (allowedOrigins.includes(origin)) {
-          console.log(origin, allowedOrigins);
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
+      origin: ['http://localhost:5173'], // Add your frontend URL(s) here
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE']
     })
