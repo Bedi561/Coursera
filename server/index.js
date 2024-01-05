@@ -18,6 +18,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// Handle preflight requests
+app.options('/admin/me', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://starlit-cuchufli-7fe773.netlify.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.send();
+  });
+  
+
 // Your routes and middleware go here...
 
 app.listen(3000, () => {
