@@ -9,8 +9,7 @@ const app = express();
 
 app.use(function(req, res, next) {
     // res.header("Access-Control-Allow-Origin", "*");
-    const allowedOrigins = ['http://localhost:3000', 'http://gamebrag.onrender.com', 'https://gamebrag.onrender.com', 'http://localhost:5173'];
-
+    const allowedOrigins = [ '', 'http://localhost:5173'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
          res.setHeader('Access-Control-Allow-Origin', origin);
