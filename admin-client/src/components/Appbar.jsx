@@ -68,6 +68,7 @@ function Appbar({ }) {
                                     isLoading: false,
                                     userEmail: null,
                                 });
+                                navigate('/');
                             } catch (error) {
                                 console.error(error);
                             }
