@@ -72,7 +72,7 @@ function Appbar({ }) {
                                 console.log('Logout Butto clicke');
 
 
-                                navigate('/');
+                                navigate('/me');
 
 
                             } catch (error) {
