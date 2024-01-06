@@ -7,9 +7,13 @@ import { userState } from "../store/atoms/user.js";
 import { userEmailState } from "../store/selectors/userEmail"
 import axios from 'axios';
 import { BASE_URL } from "../config.js";
+import { useHistory } from 'react-router-dom';
+
 
 
 function Appbar({ }) {
+    const history = useHistory();
+
     const navigate = useNavigate()
     const userLoading = useRecoilValue(isUserLoading);
     const userEmail = useRecoilValue(userEmailState);
@@ -69,12 +73,8 @@ function Appbar({ }) {
                                     userEmail: null,
                                 });
 
-                                console.log('Logout Butto clicke');
-
-
-                                navigate('/me');
-
-
+                                // Redirect to the '/' page
+                                history.push('/');
                             } catch (error) {
                                 console.error(error);
                             }
@@ -82,6 +82,7 @@ function Appbar({ }) {
                     >
                         Logout
                     </Button>
+
                 </div>
             </div>
         </div>
