@@ -3,20 +3,34 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 const app = express();
 
-// Enable CORS for all routes
-app.use(cors());
-// Enable CORS for all routes
-app.use(
-    cors({
-      origin: ['http://localhost:5173'], // Add your frontend URL(s) here
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE']
-    })
-  );
+app.use(function(req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "*");
+    const allowedOrigins = ['http://localhost:3000', 'http://gamebrag.onrender.com', 'https://gamebrag.onrender.com', 'http://localhost:5173'];
+
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+         res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-credentials", true);
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+    next();
+  });
+
+
+
+// // Enable CORS for all routes
+// app.use(
+//     cors({
+//       origin: ['http://localhost:5173'], // Add your frontend URL(s) here
+//       credentials: true,
+//       methods: ['GET', 'POST', 'PUT', 'DELETE']
+//     })
+//   );
   
 
 app.use(express.json());
