@@ -68,7 +68,13 @@ function Appbar({ }) {
                                     isLoading: false,
                                     userEmail: null,
                                 });
+
+                                console.log('Logout Butto clicke');
+
+
                                 navigate('/');
+
+
                             } catch (error) {
                                 console.error(error);
                             }
