@@ -29,12 +29,12 @@ function Landing2() {
               {!userLoading && !userEmail && (
                 <div style={{ display: "flex", marginTop: 20 }}>
                   <div style={{ marginRight: 10 }}>
-                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/signup")}>
+                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/UserSignup")}>
                       Signup
                     </Button>
                   </div>
                   <div>
-                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/signin")}>
+                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/UserSignin")}>
                       Signin
                     </Button>
                   </div>

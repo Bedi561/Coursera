@@ -7,12 +7,12 @@ import { userState } from "../store/atoms/user.js";
 import { userEmailState } from "../store/selectors/userEmail"
 import axios from 'axios';
 import { BASE_URL } from "../config.js";
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 
 
 function Appbar({ }) {
-    const history = useHistory();
+    // const history = useHistory();
 
     const navigate = useNavigate()
     const userLoading = useRecoilValue(isUserLoading);
@@ -74,7 +74,7 @@ function Appbar({ }) {
                                 });
 
                                 // Redirect to the '/' page
-                                history.push('/');
+                                navigate('/');
                             } catch (error) {
                                 console.error(error);
                             }

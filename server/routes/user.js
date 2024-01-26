@@ -2,36 +2,61 @@ const express = require('express');
 const { authenticateJwt, SECRET } = require("../middleware/auth");
 const { User, Course, Admin } = require("../db");
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
-  router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
+  try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-      if (user) {
-        res.status(403).json({ message: 'User already exists' });
-      } else {
-        const newUser = new User({ username, password });
-        await newUser.save();
-        const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
-        res.json({ message: 'User created successfully', token });
-      }
-  });
-  
-  router.post('/login', async (req, res) => {
-    const { username, password } = req.headers;
+
+    if (user) {
+      return res.status(403).json({ message: 'User already exists' });
+    }
+
+    const newUser = new User({ username, password });
+    await newUser.save();
+
+    const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '5h' });
+    return res.json({ message: 'User created successfully', token });
+  } catch (error) {
+    console.error('Error during signup:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
     const user = await User.findOne({ username, password });
+
     if (user) {
       const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
-      res.json({ message: 'Logged in successfully', token });
+      return res.json({ message: 'Logged in successfully', token });
     } else {
-      res.status(403).json({ message: 'Invalid username or password' });
+      return res.status(403).json({ message: 'Invalid username or password' });
     }
-  });
+  } catch (error) {
+    console.error('Error during login:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+// Continue similar changes for other routes...
+
   
-  router.get('/courses', authenticateJwt, async (req, res) => {
-    const courses = await Course.find({published: true});
+  
+router.get('/courses', authenticateJwt, async (req, res) => {
+  try {
+    // Extend the maxTimeMS for the findOne operation to 30 seconds
+    const admin = await Admin.findOne().maxTimeMS(30000);
+
+    const courses = await Course.find({ published: true });
     res.json({ courses });
-  });
-  
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
   router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
     const course = await Course.findById(req.params.courseId);
     console.log(course);

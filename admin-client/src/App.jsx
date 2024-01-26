@@ -18,6 +18,9 @@ import { BASE_URL } from "./config.js";
 import { useEffect } from "react";
 import path from 'path';
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
+import Dashboard from './componentsUser/dashboard.jsx';
+import SignupUSER from './componentsUser/SignupUSER.jsx';
+import SigninUSER from './componentsUser/SigninUSER.jsx';
 
 // if(process.env.Node_ENV === 'production') disableReactDevTools();
 
@@ -41,6 +44,9 @@ function App() {
                         <Route path={"/signup"} element={<Signup />} />
                         <Route path={"/me"} element={<Landing />} />
                         <Route path={"/me1"} element={<Landing2 />} />
+                        <Route path={"/dashboard"} element={<Dashboard />} />
+                        <Route path={"/UserSignup"} element={<SignupUSER />} />
+                        <Route path={"/UserSignin"} element={<SigninUSER />} />
                     </Routes>
                 </Router>
             </div>
