@@ -9,16 +9,24 @@ const app = express();
 
 const allowedOrigins = ['https://coursera-ebon.vercel.app', 'http://localhost:5173'];
 
+// app.use((req, res, next) => {
+//     const origin = req.headers.origin;
+//     if (allowedOrigins.includes(origin)) {
+//         res.setHeader('Access-Control-Allow-Origin', origin);
+//     }
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+//     next();
+// });
+
+
 app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+    res.header('Access-Control-Allow-Origin', 'https://coursera-ebon.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
-});
+  });
 
 app.use(express.json());
 
