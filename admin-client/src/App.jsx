@@ -18,7 +18,7 @@ import { BASE_URL } from "./config.js";
 import { useEffect } from "react";
 import path from 'path';
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
-import Dashboard from './componentsUser/dashboard.jsx';
+import Dashboard from './componentsUser/Dashboard.jsx';
 import SignupUSER from './componentsUser/SignupUSER.jsx';
 import SigninUSER from './componentsUser/SigninUSER.jsx';
 
