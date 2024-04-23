@@ -48,10 +48,10 @@ export const FirstPage = () => {
         }}
       >
         <Stack spacing={2} direction="row">
-          <CustomButton component={RouterLink} to="/me" variant="contained">
+          <CustomButton component={RouterLink} to="/admin/me" variant="contained">
             ADMIN
           </CustomButton>
-          <CustomButton component={RouterLink} to="/me1" variant="contained">
+          <CustomButton component={RouterLink} to="/user/me1" variant="contained"  target="_blank">
             USER
           </CustomButton>
         </Stack>

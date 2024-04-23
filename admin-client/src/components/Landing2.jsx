@@ -11,6 +11,9 @@ function Landing2() {
   const userEmail = useRecoilValue(userEmailState);
   const userLoading = useRecoilValue(isUserLoading);
 
+  console.log('userEmail:', userEmail);
+  console.log('userLoading:', userLoading);
+
   return (
     <>
       <Paper elevation={3} style={{ padding: 10, backgroundColor: "#ffcccb", textAlign: "center" }}>
@@ -29,12 +32,12 @@ function Landing2() {
               {!userLoading && !userEmail && (
                 <div style={{ display: "flex", marginTop: 20 }}>
                   <div style={{ marginRight: 10 }}>
-                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/UserSignup")}>
+                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/user/UserSignup")}>
                       Signup
                     </Button>
                   </div>
                   <div>
-                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/UserSignin")}>
+                    <Button size={"large"} variant={"contained"} onClick={() => navigate("/user/UserSignin")}>
                       Signin
                     </Button>
                   </div>

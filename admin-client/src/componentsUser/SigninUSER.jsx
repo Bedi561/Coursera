@@ -1,18 +1,18 @@
-import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import { Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import { Card } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Card, Typography } from "@mui/material";
-import { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
+import { BASE_URL } from '../config.js';
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/user.js";
 import AppbarUSER from './AppbarUSER.jsx';
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-// ... (previous imports)
 
 function SigninUSER() {
     const [email, setEmail] = useState("");
@@ -20,6 +20,29 @@ function SigninUSER() {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const setUser = useSetRecoilState(userState);
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/user/login`, {
+                username: email,
+                password: password
+            }, {
+                headers: {
+                    "Content-type": "application/json"
+                }
+            });
+            const data = response.data;
+
+            localStorage.setItem("token", data.token);
+            setUser({
+                userEmail: email,
+                isLoading: false
+            });
+            navigate("/user/dashboard");
+        } catch (error) {
+            console.error("Error signing in:", error);
+        }
+    };
 
     return (
         <>
@@ -37,18 +60,14 @@ function SigninUSER() {
                 </div>
                 <Card variant={"outlined"} style={{ width: 400, padding: 20, textAlign: "center" }}>
                     <TextField
-                        onChange={(event) => {
-                            setEmail(event.target.value);
-                        }}
+                        onChange={(event) => setEmail(event.target.value)}
                         fullWidth={true}
                         label="Email"
                         variant="outlined"
                     />
                     <br /><br />
                     <TextField
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
+                        onChange={(event) => setPassword(event.target.value)}
                         fullWidth={true}
                         label="Password"
                         variant="outlined"
@@ -70,24 +89,7 @@ function SigninUSER() {
                     <Button
                         size={"large"}
                         variant="contained"
-                        onClick={async () => {
-                            const res = await axios.post(`${BASE_URL}/admin/login`, {
-                                username: email,
-                                password: password
-                            }, {
-                                headers: {
-                                    "Content-type": "application/json"
-                                }
-                            });
-                            const data = res.data;
-
-                            localStorage.setItem("token", data.token);
-                            setUser({
-                                userEmail: email,
-                                isLoading: false
-                            });
-                            navigate("/courses");
-                        }}
+                        onClick={handleLogin}
                     >
                         Sign in
                     </Button>

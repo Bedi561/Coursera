@@ -7,26 +7,16 @@ const PORT = 3001;
 
 const app = express();
 
-// const allowedOrigins = ['https://coursera-ebon.vercel.app', 'http://localhost:5173'];
+// Define the allowed origins
+const allowedOrigins = ['http://localhost:5173'];
 
-// app.use((req, res, next) => {
-//     const origin = req.headers.origin;
-//     if (allowedOrigins.includes(origin)) {
-//         res.setHeader('Access-Control-Allow-Origin', origin);
-//     }
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
-//     next();
-// });
+const corsOptions = {
+  origin: allowedOrigins,// or specify your frontend origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization, pragma',
+};
 
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://coursera-last.vercel.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  });
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -35,7 +25,7 @@ app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://pranavbedi6:cLj20iLYMe1zDez2@cluster5.izg2qvs.mongodb.net/', { useNewUrlParser: true, dbName: "courses" });
+mongoose.connect('mongodb+srv://pranavbedi6:VC6nONzm63HCM232@cluster8.efktq8e.mongodb.net/', { useNewUrlParser: true, dbName: "courses" });
 
 // Start the server on port 3001
-app.listen(3001, () => console.log('Server running on port 3001'));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

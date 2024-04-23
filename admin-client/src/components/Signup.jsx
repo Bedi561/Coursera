@@ -8,13 +8,14 @@ import {useNavigate} from "react-router-dom";
 import {useSetRecoilState} from "recoil";
 import {userState} from "../store/atoms/user.js";
 import Appbar from './Appbar.jsx';
+import { adminState } from '../store/atoms/admin.js';
 // import InitUser from "./InitUser.jsx";
 
 function Signup() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
-    const setUser = useSetRecoilState(userState);
+    const setAdmin = useSetRecoilState(adminState);
 
     return (<><Appbar /> <div>
         <div style={{
@@ -58,8 +59,8 @@ function Signup() {
                         let data = response.data;
                         localStorage.setItem("token", data.token);
                         // window.location = "/"
-                        setUser({ userEmail: email, isLoading: false });
-                        navigate("/courses");
+                        setAdmin({ adminEmail: email, isLoading: false });
+                        navigate("/main");
                     } }
 
                 > Signup</Button>

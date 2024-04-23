@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import { BASE_URL } from "../config.js";
 import axios from "axios";
 import Appbar from "./Appbar.jsx";
+import Sidebar from "./Sidebar.jsx";
 // import InitUser from "./InitUser.jsx";
 
 function Courses() {
@@ -22,7 +23,7 @@ function Courses() {
         init();
     }, []);
 
-    return ( <> <Appbar/>  <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+    return ( <> <Appbar/>  <Sidebar/><div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
         {courses.map(course => {
             return <Course key={course._id} course={course} />}
         )}
@@ -33,7 +34,10 @@ function Courses() {
 export function Course({course}) {
     const navigate = useNavigate();
 
-    return <Card style={{
+    return (
+    <>
+    
+    <Card style={{
         margin: 10,
         width: 300,
         minHeight: 200,
@@ -44,10 +48,12 @@ export function Course({course}) {
         <img src={course.imageLink} style={{width: 300}} ></img>
         <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
             <Button variant="contained" size="large" onClick={() => {
-                navigate("/course/" + course._id);
+                navigate("/admin/course/" + course._id);
             }}>Edit</Button>
         </div>
     </Card>
+    </>
+    )
 
 }
 /*  this component is meant to display information about a course, including its title, description, and image. 

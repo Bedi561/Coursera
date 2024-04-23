@@ -4,6 +4,21 @@ const { User, Course, Admin } = require("../db");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
+
+
+router.get("/me", authenticateJwt, async (req, res) => {
+  const user = await User.findOne({ username: req.user.username });
+  if (!user) {
+      res.status(403).json({ msg: "User doesn't exist" });
+      return;
+  }
+  res.json({
+      username: user.username
+  });
+});
+
+
+
 router.post('/signup', async (req, res) => {
   try {
     const { username, password } = req.body;
