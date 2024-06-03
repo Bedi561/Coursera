@@ -60,7 +60,7 @@ function Signup() {
                         localStorage.setItem("token", data.token);
                         // window.location = "/"
                         setAdmin({ adminEmail: email, isLoading: false });
-                        navigate("/main");
+                        navigate("/admin/main");
                     } }
 
                 > Signup</Button>

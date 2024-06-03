@@ -33,7 +33,7 @@ export const Landing = () => {
                                 A place to learn, earn and grow
                             </Typography>
 
-                            {!adminLoading && !adminEmail && (
+                            {(
                                 <div style={{ display: "flex", marginTop: 20 }}>
                                     <div style={{ marginRight: 10 }}>
                                         <Button

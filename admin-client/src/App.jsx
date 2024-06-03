@@ -74,111 +74,70 @@ function InitUser() {
     const setAdmin = useSetRecoilState(adminState);
     const location = useLocation();
 
-    const initUser = async () => {
-        try {
-            console.log("Initiating user data fetch...");
-            const token = localStorage.getItem("token");
-    
-            if (!token) {
-                console.log("No token found. Aborting user data initialization.");
-                setUser({
-                    isLoading: false,
-                    userEmail: null
-                });
-                return;
-            }
-    
-            // Set initial state
-            setUser({
-                isLoading: true,
-                userEmail: null
-            });
-    
-            const response = await axios.get(`${BASE_URL}/user/me`, {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            });
-    
-            console.log("User data response:", response.data);
-    
-            if (response.data.username) {
-                setUser({
-                    isLoading: false,
-                    userEmail: response.data.username
-                });
-                console.log("User data initialized successfully.");
-            } else {
-                setUser({
-                    isLoading: false,
-                    userEmail: null
-                });
-                console.log("User data not found in response.");
-            }
-        } catch (error) {
-            // console.error("Error initializing user data:", error);
-            setUser({
-                isLoading: false,
-                userEmail: null
-            });
-        }
-    };
-    
-    
-    const initAdmin = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            console.log("Token:", token); // Add log for token
-    
-            if (!token) {
-                console.log("No token found. Aborting ADMIN data initialization.");
-                return;
-            }
-    
-            console.log("Initiating ADMIN data fetch...");
-    
-            const response = await axios.get(`${BASE_URL}/admin/me`, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("token"),
-                }
-            });
-    
-            console.log("Admin data response:", response.data); // Add log for response data
-    
-            if (response.data.username) {
-                setAdmin({
-                    isLoading: false,
-                    adminEmail: response.data.username
-                });
-                console.log("Admin data initialized successfully.");
-            } else {
-                setAdmin({
-                    isLoading: false,
-                    adminEmail: null
-                });
-                console.log("Admin data not found in response.");
-            }
-        } catch (error) {
-            console.error("Error initializing admin data:", error); // Add error log
-            setAdmin({
-                isLoading: false,
-                adminEmail: null
-            });
-        }
-    };
-    
-    
-
     useEffect(() => {
+        const initUser = async () => {
+            try {
+                console.log("Initiating user data fetch...");
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    console.log("No token found. Aborting user data initialization.");
+                    setUser({ isLoading: false, userEmail: null });
+                    return;
+                }
+
+                // Set initial state
+                setUser({ isLoading: true, userEmail: null });
+
+                const response = await axios.get(`${BASE_URL}/user/me`, {
+                    headers: {  "Authorization": "Bearer " + token }
+                });
+
+                console.log("User data response:", response.data);
+
+                if (response.data.username) {
+                    setUser({ isLoading: false, userEmail: response.data.username });
+                    console.log("User data initialized successfully.");
+                    // Only initialize admin data if the user is authenticated
+                    initAdmin(token);
+                } else {
+                    setUser({ isLoading: false, userEmail: null });
+                    console.log("User data not found in response.");
+                }
+            } catch (error) {
+                console.error("Error initializing user data:", error);
+                setUser({ isLoading: false, userEmail: null });
+            }
+        };
+
+        const initAdmin = async (token) => {
+            try {
+                console.log("Initiating ADMIN data fetch...");
+                const response = await axios.get(`${BASE_URL}/admin/me`, {
+                    headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+                });
+
+                console.log("Admin data response:", response.data);
+
+                if (response.data.username) {
+                    setAdmin({ isLoading: false, adminEmail: response.data.username });
+                    console.log("Admin data initialized successfully.");
+                } else {
+                    setAdmin({ isLoading: false, adminEmail: null });
+                    console.log("Admin data not found in response.");
+                }
+            } catch (error) {
+                console.error("Error initializing admin data:", error);
+                setAdmin({ isLoading: false, adminEmail: null });
+            }
+        };
+
         if (location.pathname.startsWith("/user")) {
             initUser();
-        } 
-        if (location.pathname.startsWith("/admin")) {
-            initAdmin();
         }
-    }, [location]);
+    }, [location, setUser, setAdmin]);
 
     return null;
 }
+
 
 export default App;
