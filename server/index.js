@@ -8,7 +8,7 @@ const PORT = 3001;
 const app = express();
 
 // Define the allowed origins
-const allowedOrigins = ['http://localhost:5173', 'https://coursera-clone-nm8f.onrender.com'];
+const allowedOrigins = ['http://localhost:5173', 'https://coursera-clone-nm8f.onrender.com', 'https://coursera-1gdu.vercel.app/'];
 
 const corsOptions = {
   origin: allowedOrigins,// or specify your frontend origin
